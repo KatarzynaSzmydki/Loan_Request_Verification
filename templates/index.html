@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Provide loan details </h3>
+            <br>
+
+            <form action="/verifyloanrequest" method="POST" class="form-horizontal">
+
+                <div class="form-group">
+                    <labe for="">Gender</labe>
+                    <select class="form-control" name="Gender" id="Gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <labe for="">Married</labe>
+                    <select class="form-control" name="Married" id="Married">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Dependents</labe>
+                    <input class="form-control" type="number" name="Dependents" id="Dependents">
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Education</labe>
+                    <select class="form-control" name="Education" id="Education">
+                        <option value="Graduate">Graduate</option>
+                        <option value="Not Graduate">Not Graduate</option>
+                    </select>
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Self-Employed</labe>
+                    <select class="form-control" name="Self_Employed" id="Self_Employed">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <labe for="">Applicant Income</labe>
+                    <input class="form-control" type="number" name="ApplicantIncome" id="ApplicantIncome">
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Coapplicant Income</labe>
+                    <input class="form-control" type="number" name="CoapplicantIncome" id="CoapplicantIncome">
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Loan Amount</labe>
+                    <input class="form-control" type="number" name="LoanAmount" id="LoanAmount">
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Loan Amount Term</labe>
+                    <input class="form-control" type="number" name="Loan_Amount_Term" id="Loan_Amount_Term">
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <labe for="">Credit History</labe>
+                    <select class="form-control" name="Credit_History" id="Credit_History">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <br>
+
+
+                <div class="form-group">
+                    <labe for="">Property Area</labe>
+                    <select class="form-control" name="Property_Area" id="Property_Area">
+                        <option value="Urban">Urban</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Semiurban">Semiurban</option>
+                    </select>
+                </div>
+
+
+                <br>
+                <br>
+
+                <input class="btn btn-danger" type="submit" value="Verify Loan Request" id="">
+            </form>
+
+
+        </div>
+    </div>
+
+
+</div>
+<br>
+<br>
+
+
+{% endblock %}

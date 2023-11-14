@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+
+<br>
+<br>
+<div class="container">
+
+    <h3 class="mt-5"> Loan Requests</h3>
+
+    {% for loan in loans_tbl %}
+    <div class="row">
+        <div >
+            <div class="card shadow mb-2 bg-white rounded">
+                <div class="card-body">
+                    <div class="row">
+<!--                        <div class="col-md-1">{{loan.Loan_ID}}</div>-->
+                        <div class="col-md-1">{{loan.ApplicationDateTime}}</div>
+<!--                        <div class="col-md-1">{{loan.Gender}}</div>-->
+<!--                        <div class="col-md-1">{{loan.Married}}</div>-->
+                        <div class="col-md-1">{{loan.Dependents}}</div>
+                        <div class="col-md-1">{{loan.Education}}</div>
+                        <div class="col-md-1">{{loan.ApplicantIncome}}</div>
+                        <div class="col-md-1">{{loan.CoapplicantIncome}}</div>
+                        <div class="col-md-1">{{loan.LoanAmount}}</div>
+                        <div class="col-md-1">{{loan.Loan_Amount_Term}}</div>
+                        <div class="col-md-1">{{loan.Credit_History}}</div>
+                        <div class="col-md-1">{{loan.Property_Area}}</div>
+                        <div class="col-md-1">
+                            <span class="badge bg-danger">{{loan.model_pred}}</span>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="edit_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Edit</a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="delete_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Delete</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

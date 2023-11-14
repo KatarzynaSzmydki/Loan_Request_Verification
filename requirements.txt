@@ -1,0 +1,15 @@
+fpdf2
+flask~=3.0.0
+sqlalchemy~=2.0.23
+flask-sqlalchemy
+flask_restful
+numpy~=1.26.1
+azure-storage-file-datalake
+azure-identity
+pandas~=2.1.2
+pyodbc
+fastapi
+uvicorn[standard]
+pydantic
+scikit-learn
+pickle
