@@ -18,19 +18,13 @@ from azure.storage.filedatalake import (
     FileSystemClient
 )
 from azure.identity import DefaultAzureCredential
+from credentials import client_id, client_secret, tenant_id, workspace_id, dataset_id, account_name, account_key, file_system, client_directory
 
-
-
-client_id = "521f5561-a53b-473e-a177-95e408126212"
-client_secret = "g458Q~86ZQZUGKL.whwYFSFHu6n4S0jLHBsugcbC"
-tenant_id = "29460682-506d-4717-96a7-514858dc222d"   # Directory (tenant) ID from Azure AD
-
-workspace_id = "03aa96f0-fe2d-4de3-a8ec-900eeee64fb2"
-dataset_id = "13293fb2-10c6-4e88-8a07-b6a3bd53c27f"
 
 base_url = f"https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes"
 
 
+# ========================================================================
 
 
 def get_service_client_account_key(account_name, account_key) -> DataLakeServiceClient:
@@ -52,13 +46,13 @@ def __upload_file_to_directory(self, directory_client: DataLakeDirectoryClient, 
 def upload_file_to_directory(load_from_local_file, file_to_upload_path, loan_id, file_to_upload_json=None):
     try:
         service_client = get_service_client_account_key(
-            account_name="rs1dl1",
-            account_key="pRyCGC4UOzRK8hkLrxdJlPhkn5Q8RkrN3xerBoOb6x00gqp3GXb+iFYQ07CJ1hmcwfb32E6kYMXK+AStcmWw5Q==")
+            account_name = account_name,
+            account_key = account_key)
 
 
-        file_system_client = service_client.get_file_system_client(file_system="loanapplicationverification")
-        directory_client = file_system_client.get_directory_client("loanapplicationrequest")
-        file_client = directory_client.create_file(f'loanapplicationrequest{datetime.utcnow().strftime("%Y%m%d%H%M%S")}_{loan_id}.json')
+        file_system_client = service_client.get_file_system_client(file_system = file_system)
+        directory_client = file_system_client.get_directory_client(client_directory)
+        file_client = directory_client.create_file(f'{client_directory}{datetime.utcnow().strftime("%Y%m%d%H%M%S")}_{loan_id}.json')
 
         if (load_from_local_file is True) & (file_to_upload_path is not None):
             local_file = open(
@@ -191,6 +185,7 @@ def get_score_for_request(model_filename, feature_values):
         pred_loan = None
 
     return [pred_loan, pred_proba]
+
 
 
 # ========================================================================

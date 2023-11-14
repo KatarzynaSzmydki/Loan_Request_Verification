@@ -7,9 +7,9 @@ import pandas as pd
 import struct
 from datetime import datetime
 
-# ========================================================================
+from credentials import conn_string
 
-conn_string = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:loanappsqldb.database.windows.net,1433;Database=loanapp_SQLDB;Uid=sqladmin;Pwd='+'Start1234'+';Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+# ========================================================================
 
 
 def create_table():
