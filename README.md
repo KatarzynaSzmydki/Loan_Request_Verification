@@ -6,4 +6,6 @@ This project implements scoring model within Flask application. User inputs basi
 ![image](https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/d40e2216-4c40-40ee-8cfc-524e1115c6ec)
 
 
-<video src="https://pbitestvideo.blob.core.windows.net/pbivideos/MSFabric_Streaming_PBIReport.mp4?sp=r&st=2023-11-17T13:08:30Z&se=2024-11-30T21:08:30Z&spr=https&sv=2022-11-02&sr=b&sig=PbGBWRazPhuUL6bMy4IyGp6dq01jZRBZdqm%2F%2Bc6AZMw%3D"></video>
+
+https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/0bd6903e-1de8-4ecb-b98d-3e5c813f5f97
+
