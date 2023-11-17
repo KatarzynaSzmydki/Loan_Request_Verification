@@ -6,6 +6,3 @@ This project implements scoring model within Flask application. User inputs basi
 ![image](https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/d40e2216-4c40-40ee-8cfc-524e1115c6ec)
 
 
-
-https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/0bd6903e-1de8-4ecb-b98d-3e5c813f5f97
-
