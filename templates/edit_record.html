@@ -1,20 +1,24 @@
+
+
 {% extends 'base.html' %}
 
 {% block body %}
+
 
 <br>
 
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <h3>Provide loan details </h3>
+      <h3>Edit loan details </h3>
       <br>
 
-      <form action="/verifyloanrequest" method="POST" class="form-horizontal">
-
+      <form action="/save_edits" method="POST" class="form-horizontal">
+        <input type="hidden" value="{{ loan_data.Loan_ID }}" name="Loan_ID" >
         <div class="form-group">
           <labe for="">Gender</labe>
-          <select class="form-control" name="Gender" id="Gender" value="{{loan_data.Gender}}">
+          <select class="form-control" name="Gender" id="Gender">
+            <option style="background:gray" value="{{ loan_data.Gender }}" selected > {{ loan_data.Gender }} </option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -23,9 +27,10 @@
 
         <div class="form-group">
           <labe for="">Married</labe>
-          <select class="form-control" name="Married" id="Married" value="{{loan_data.Married}}">
-            <option value="Yes">Yes</option>
+          <select class="form-control" name="Married" id="Married">
+            <option style="background:gray" value="{{ loan_data.Married }}" selected > {{ loan_data.Married }} </option>
             <option value="No">No</option>
+            <option value="Yes">Yes</option>
           </select>
         </div>
         <br>
@@ -33,16 +38,23 @@
 
         <div class="form-group">
           <labe for="">Dependents</labe>
-          <input class="form-control" type="number" name="Dependents" id="Dependents" value="{{loan_data.Dependents}}">
+          <select class="form-control" name="Dependents" id="Dependents">
+            <option style="background:gray" value="{{ loan_data.Dependents }}" selected > {{ loan_data.Dependents }} </option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3+">3+</option>
+        </select>
         </div>
         <br>
 
 
         <div class="form-group">
           <labe for="">Education</labe>
-          <select class="form-control" name="Education" id="Education" value="{{loan_data.Education}}">
-            <option value="Graduate">Graduate</option>
+          <select class="form-control" name="Education" id="Education">
+            <option style="background:gray" value="{{ loan_data.Education }}" selected > {{ loan_data.Education }} </option>
             <option value="Not Graduate">Not Graduate</option>
+            <option value="Graduate">Graduate</option>
           </select>
         </div>
         <br>
@@ -50,9 +62,10 @@
 
         <div class="form-group">
           <labe for="">Self-Employed</labe>
-          <select class="form-control" name="Self_Employed" id="Self_Employed" value="{{loan_data.Self_Employed}}">
-            <option value="Yes">Yes</option>
+          <select class="form-control" name="Self_Employed" id="Self_Employed">
+            <option style="background:gray" value="{{ loan_data.Self_Employed }}" selected > {{ loan_data.Self_Employed }} </option>
             <option value="No">No</option>
+            <option value="Yes">Yes</option>
           </select>
         </div>
         <br>
@@ -86,9 +99,10 @@
 
         <div class="form-group">
           <labe for="">Credit History</labe>
-          <select class="form-control" name="Credit_History" id="Credit_History" value="{{loan_data.Credit_History}}">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
+          <select class="form-control" name="Credit_History" id="Credit_History">
+            <option style="background:gray" value="{{ loan_data.Credit_History }}" selected > {{ loan_data.Credit_History }} </option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
           </select>
         </div>
         <br>
@@ -96,10 +110,11 @@
 
         <div class="form-group">
           <labe for="">Property Area</labe>
-          <select class="form-control" name="Property_Area" id="Property_Area" value="{{loan_data.Property_Area}}">
-            <option value="Urban">Urban</option>
+          <select class="form-control" name="Property_Area" id="Property_Area">
+            <option style="background:gray" value="{{ loan_data.Property_Area }}" selected > {{ loan_data.Property_Area }} </option>
             <option value="Rural">Rural</option>
             <option value="Semiurban">Semiurban</option>
+            <option value="Urban">Urban</option>
           </select>
         </div>
 
@@ -107,7 +122,7 @@
         <br>
         <br>
 
-        <input class="btn btn-danger" type="submit" value="Verify Loan Request" id="">
+        <input class="btn btn-danger" type="submit" value="Save Edits" id="">
       </form>
 
 

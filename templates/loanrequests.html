@@ -5,9 +5,34 @@
 
 <br>
 <br>
-<div class="container">
+<div class="container custom-container">
 
-    <h3 class="mt-5"> Loan Requests</h3>
+    <h3 class="mt-5 mb-2"> Loan Requests</h3>
+
+    <div class="row">
+        <div >
+            <div class="card shadow mb-2 bg-white rounded">
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-1"><b>Date</b></div>
+                        <div class="col-md-1"><b>Gender</b></div>
+                        <div class="col-md-1"><b>Married</b></div>
+                        <div class="col-md-1"><b>Dependents</b></div>
+                        <div class="col-md-1"><b>Education</b></div>
+                        <div class="col-md-1"><b>Income</b></div>
+                        <div class="col-md-1"><b>Loan Amount</b></div>
+                        <div class="col-md-1"><b>Loan Term</b></div>
+                        <div class="col-md-1"><b>Credit History</b></div>
+                        <div class="col-md-1"><b>Property Area</b></div>
+                        <div class="col-md-1"><b>Model Pred</b></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     {% for loan in loans_tbl %}
     <div class="row">
@@ -15,21 +40,27 @@
             <div class="card shadow mb-2 bg-white rounded">
                 <div class="card-body">
                     <div class="row">
-<!--                        <div class="col-md-1">{{loan.Loan_ID}}</div>-->
-                        <div class="col-md-1">{{loan.ApplicationDateTime}}</div>
-<!--                        <div class="col-md-1">{{loan.Gender}}</div>-->
-<!--                        <div class="col-md-1">{{loan.Married}}</div>-->
+
+                        <div class="col-md-1">{{loan.ApplicationDate}}</div>
+                        <div class="col-md-1">{{loan.Gender}}</div>
+                        <div class="col-md-1">{{loan.Married}}</div>
                         <div class="col-md-1">{{loan.Dependents}}</div>
                         <div class="col-md-1">{{loan.Education}}</div>
                         <div class="col-md-1">{{loan.ApplicantIncome}}</div>
-                        <div class="col-md-1">{{loan.CoapplicantIncome}}</div>
                         <div class="col-md-1">{{loan.LoanAmount}}</div>
                         <div class="col-md-1">{{loan.Loan_Amount_Term}}</div>
                         <div class="col-md-1">{{loan.Credit_History}}</div>
                         <div class="col-md-1">{{loan.Property_Area}}</div>
+
+
                         <div class="col-md-1">
-                            <span class="badge bg-danger">{{loan.model_pred}}</span>
+                            {% if loan.model_pred == "Yes" %}
+                                <span class="badge bg-success">{{loan.model_pred}}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{loan.model_pred}}</span>
+                            {% endif %}
                         </div>
+
                         <div class="col-md-1">
                             <a href="edit_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Edit</a>
                         </div>

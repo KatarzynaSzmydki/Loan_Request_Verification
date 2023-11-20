@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html' %}
 
 {% block body %}
@@ -32,8 +34,8 @@
                             <div class="form-group">
                                 <labe for=""><b>Married</b></labe>
                                 <select class="form-control" name="Married" id="Married">
-                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -41,7 +43,12 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <labe for=""><b>Dependents</b></labe>
-                                <input class="form-control" type="number" name="Dependents" id="Dependents">
+                                <select class="form-control" name="Dependents" id="Dependents">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3+">3+</option>
+                                </select>
                             </div>
                         </div>
 
@@ -50,8 +57,8 @@
                             <div class="form-group">
                                 <labe for=""><b>Education</b></labe>
                                 <select class="form-control" name="Education" id="Education">
-                                    <option value="Graduate">Graduate</option>
                                     <option value="Not Graduate">Not Graduate</option>
+                                    <option value="Graduate">Graduate</option>
                                 </select>
                             </div>
                         </div>
@@ -60,8 +67,8 @@
                             <div class="form-group">
                                 <labe for=""><b>Self-Employed</b></labe>
                                 <select class="form-control" name="Self_Employed" id="Self_Employed">
-                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -100,8 +107,8 @@
                             <div class="form-group">
                                 <labe for=""><b>Credit History</b></labe>
                                 <select class="form-control" name="Credit_History" id="Credit_History">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -111,9 +118,9 @@
                             <div class="form-group">
                                 <labe for="" c><b>Property Area</b></labe>
                                 <select class="form-control" name="Property_Area" id="Property_Area">
-                                    <option value="Urban">Urban</option>
                                     <option value="Rural">Rural</option>
                                     <option value="Semiurban">Semiurban</option>
+                                    <option value="Urban">Urban</option>
                                 </select>
                             </div>
                         </div>

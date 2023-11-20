@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1007eb2b-33b4-422f-a33b-bbf6c09d7139/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/LoanApplicationVerification",
+    "appService.deploySubpath": "."
+}

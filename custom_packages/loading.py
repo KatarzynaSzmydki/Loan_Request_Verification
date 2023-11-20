@@ -22,18 +22,20 @@ def create_table():
                 , [Married] NVARCHAR(10)
                 , [Dependents] NVARCHAR(10)
                 , [Education] NVARCHAR(20)
-                , [Self_Employed] NVARCHAR(10) 
+                , [Self_Employed] NVARCHAR(10)
                 , [ApplicantIncome] FLOAT
                 , [CoapplicantIncome] FLOAT
                 , [LoanAmount]  FLOAT
                 , [Loan_Amount_Term] SMALLINT
-                , [Credit_History] SMALLINT
-                , [Property_Area] NVARCHAR(20)
+                , [Credit_History] NVARCHAR(10)
+                , [Property_Area] NVARCHAR(10)
                 , [Loan_ID] NVARCHAR(50)
                 , [ApplicationDateTime] NVARCHAR(20)
                 , [RecordDateTime] BIGINT
+                , [LastRecordUpdateDateTime] BIGINT
                 , [model_pred] NVARCHAR(10)
                 , [model_pred_proba] NVARCHAR(50)
+                , [ApplicationDate] AS CAST(ApplicationDateTime AS DATE)
             );
             '''
 
@@ -68,9 +70,10 @@ def get_data(loan_id):
     cursor = conn.cursor()
     cursor.execute(sql_query_get_data)
     dataset = cursor.fetchall()
-    # columns = [column[0] for column in cursor.description]
+
+    df = pd.DataFrame.from_records(dataset, columns=[col[0] for col in cursor.description])
     print(f'Data fetched at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
-    return dataset
+    return df
 
 
 def get_all_data():
@@ -83,7 +86,8 @@ def get_all_data():
     cursor = conn.cursor()
     cursor.execute(sql_query_get_data)
     dataset = cursor.fetchall()
-    # columns = [column[0] for column in cursor.description]
+
+    # df = pd.DataFrame.from_records(dataset, columns=[col[0] for col in cursor.description])
     print(f'Data fetched at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
     return dataset
 
@@ -118,14 +122,45 @@ def delete_loan_request(loan_id):
 
 
 
+def update_loan_request(_features):
+
+    sql_query_update_data = f'''
+        UPDATE LoanApplications
+        SET 
+            [Gender] = '{_features[1]}'
+            , [Married] = '{_features[2]}'
+                , [Dependents] = '{_features[3]}'
+                , [Education] = '{_features[4]}'
+                , [Self_Employed] = '{_features[5]}'
+                , [ApplicantIncome] = '{_features[6]}'
+                , [CoapplicantIncome] = '{_features[7]}'
+                , [LoanAmount]  = '{_features[8]}'
+                , [Loan_Amount_Term] = '{_features[9]}'
+                , [Credit_History] = '{_features[10]}'
+                , [Property_Area] = '{_features[11]}'
+                , [LastRecordUpdateDateTime] = '{_features[12]}'
+                , [model_pred] = '{_features[13]}'
+                , [model_pred_proba] = '{_features[14]}'
+                
+        WHERE [Loan_ID] = '{_features[0]}'
+            '''
+
+    conn = odbc.connect(conn_string)
+    cursor = conn.cursor()
+    cursor.execute(sql_query_update_data)
+    cursor.commit()
+    print(f'Record {_features[0]} updated at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+
+
+
 
 
 if __name__== "__main__":
 
-    pass
+    # pass
 
     # Create table
-    # create_table()
+    create_table()
 
     # Test loading
     # Loan_ID = 'LP-3221050401389918522429'

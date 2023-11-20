@@ -10,7 +10,9 @@ import json
 import pprint
 
 from custom_packages.actions import get_score_for_request
-from custom_packages.loading import load_data, get_all_data, delete_loan_request, get_data
+from custom_packages.loading import load_data, get_all_data, delete_loan_request, get_data, update_loan_request
+import dicts
+
 
 model_filename = 'finalized_model.sav'
 
@@ -43,6 +45,7 @@ def verifyloanrequest():
     _key_value_pairs['Loan_ID'] = "LP" + str(hash(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))) + str(random.randint(1,900))
     _key_value_pairs['ApplicationDateTime'] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     _key_value_pairs['RecordDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
 
 
     # Get score from model
@@ -71,7 +74,7 @@ def verifyloanrequest():
 
     # Load data to SQL table in SQL server
     _feature_values_to_load = "\', \'".join(_feature_values)
-    print(_feature_values_to_load)
+    # print(_feature_values_to_load)
     load_data(_feature_values_to_load)
     # print(f'{datetime.utcnow()}: Success sending data to Azure.')
 
@@ -88,10 +91,12 @@ def report_page():
 @app.route('/loanrequests', methods = ['GET'])
 def loanrequests():
 
-    loans_tbl = get_all_data()
+    loan_data = get_all_data()
     # loans_tbl['ApplicationDateTime'] = loans_tbl['ApplicationDateTime'].strftime
 
-    return render_template("loanrequests.html", loans_tbl = loans_tbl)
+    # loan_data = list(loan_data.to_records(index=False))
+
+    return render_template("loanrequests.html", loans_tbl = loan_data)
 
 
 
@@ -105,8 +110,49 @@ def delete_record(loan_id):
 @app.route('/edit_record/<loan_id>')
 def edit_record(loan_id):
     loan_data = get_data(loan_id)
-    return render_template("edit_record.html", loan_data = loan_data)
 
+    # print(loan_data)
+    return render_template("edit_record.html", loan_data = loan_data.iloc[0,])
+
+
+
+
+@app.route('/save_edits', methods=['POST'])
+def save_edits():
+
+    _key_value_pairs = {
+        'Loan_ID': request.form["Loan_ID"],
+        'Gender' : request.form["Gender"],
+        'Married' : request.form["Married"],
+        'Dependents' : request.form["Dependents"],
+        'Education' : request.form["Education"],
+        'Self_Employed' : request.form["Self_Employed"],
+        'ApplicantIncome' : request.form["ApplicantIncome"],
+        'CoapplicantIncome' : request.form["CoapplicantIncome"],
+        'LoanAmount' : request.form["LoanAmount"],
+        'Loan_Amount_Term' : request.form["Loan_Amount_Term"],
+        'Credit_History' : request.form["Credit_History"],
+        'Property_Area' : request.form["Property_Area"]
+    }
+
+    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+
+    # Get score from model
+    _features = pd.DataFrame.from_dict([_key_value_pairs])
+
+    pred_proba = get_score_for_request(model_filename, _features)
+
+    _key_value_pairs['model_pred'] = pred_proba[0]
+    _key_value_pairs['model_pred_proba'] = pred_proba[1]
+
+    # pprint.pprint(_key_value_pairs)
+
+    # Saving edits to DB
+    _feature_values = [x for x in _key_value_pairs.values()]
+    update_loan_request(_features=_feature_values)
+
+
+    return redirect("/loanrequests")
 
 
 

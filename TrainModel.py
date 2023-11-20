@@ -13,6 +13,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, TargetEncoder
 
 
+import dicts
+
 file_path = "C:\\Users\\kszmydki001\\IdeaProjects\\Data Processing Tool\\Loan+Approval+Prediction.csv"
 # model = pickle.load(open('model.pkl', 'rb'))
 
@@ -46,14 +48,22 @@ loan_input_data = loan_input_data.drop('Loan_Status', axis=1)
 # TargetEncoder considers missing values, such as np.nan or None, as another category and encodes them like any other category. Categories that are not seen during fit are encoded with the target mean, i.e. target_mean_.
 
 
+loan_input_data['Gender'].replace(dicts.gender, inplace=True)
+loan_input_data['Married'].replace(dicts.yes_no, inplace=True)
+loan_input_data['Dependents'].replace(dicts.dependents, inplace=True)
+loan_input_data['Education'].replace(dicts.education, inplace=True)
+loan_input_data['Self_Employed'].replace(dicts.yes_no, inplace=True)
+loan_input_data['Credit_History'].replace(dicts.yes_no, inplace=True)
+loan_input_data['Property_Area'].replace(dicts.property_area, inplace=True)
 
 
 
 # Building model
 
 y = loan_input_data.Loan_Status_n
-X = loan_input_data[['ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History']]
-    # loan_input_data.drop('Loan_Status_n', axis=1)
+X = loan_input_data.drop('Loan_Status_n', axis=1)
+
+# loan_input_data[['ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History']]
 
 
 X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=104, test_size=0.3, shuffle=True)
@@ -90,3 +100,5 @@ print(classification_report(y_test, y_preds))
 # Save trained model as pickle file
 filename = 'finalized_model.sav'
 pickle.dump(model, open(filename, 'wb'))
+
+

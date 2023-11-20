@@ -19,7 +19,7 @@ from azure.storage.filedatalake import (
 )
 from azure.identity import DefaultAzureCredential
 from credentials import client_id, client_secret, tenant_id, workspace_id, dataset_id, account_name, account_key, file_system, client_directory
-
+import dicts
 
 base_url = f"https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes"
 
@@ -170,7 +170,29 @@ def get_score_for_request(model_filename, feature_values):
 
     model = pickle.load(open(model_filename, 'rb'))
 
-    _features = feature_values[['ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History']]
+    feature_values['Gender'].replace(dicts.gender, inplace=True)
+    feature_values['Married'].replace(dicts.yes_no, inplace=True)
+    feature_values['Dependents'].replace(dicts.dependents, inplace=True)
+    feature_values['Education'].replace(dicts.education, inplace=True)
+    feature_values['Self_Employed'].replace(dicts.yes_no, inplace=True)
+    feature_values['Credit_History'].replace(dicts.yes_no, inplace=True)
+    feature_values['Property_Area'].replace(dicts.property_area, inplace=True)
+    
+    
+    _features = feature_values[[
+        'Gender'
+        ,'Married'
+        ,'Dependents'
+        ,'Education'
+        ,'Self_Employed'
+        ,'ApplicantIncome'
+        ,'CoapplicantIncome'
+        ,'LoanAmount'
+        ,'Loan_Amount_Term'
+        ,'Credit_History'
+        , 'Property_Area'
+        ]]
+    
     # print(_features)
 
     pred = model.predict(_features)

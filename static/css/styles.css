@@ -1,0 +1,23 @@
+
+.custom-container {
+        max-width: 1900px; /* Adjust the width based on your preference */
+        margin: 0 auto;   /* Center the container on the page */
+    }
+
+
+.custom-navbar-brand {
+        margin-left: 20px; /* Adjust the left margin as needed */
+    }
+ .navbar-nav .nav-item {
+    margin-right: 10px; /* Adjust the right margin as needed */
+}
+
+
+.navbar-nav .nav-item.active {
+        background-color: #007bff; /* Change to the desired background color */
+    }
+
+    .navbar-nav .nav-item.active a {
+        color: #fff !important; /* Change to the desired text color */
+    }
+
