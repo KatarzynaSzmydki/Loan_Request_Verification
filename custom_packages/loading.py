@@ -12,10 +12,30 @@ from credentials import conn_string
 # ========================================================================
 
 
-def create_table():
+sql_query_create_LoanApplications_Processed = '''
+            DROP TABLE IF EXISTS LoanApplications_Processed ;
+            CREATE TABLE LoanApplications_Processed  (
+                [Gender] NVARCHAR(20)
+                , [Married] NVARCHAR(10)
+                , [Dependents] NVARCHAR(10)
+                , [Education] NVARCHAR(20)
+                , [Self_Employed] NVARCHAR(10)
+                , [ApplicantIncome] FLOAT
+                , [CoapplicantIncome] FLOAT
+                , [LoanAmount]  FLOAT
+                , [Loan_Amount_Term] SMALLINT
+                , [Credit_History] NVARCHAR(10)
+                , [Property_Area] NVARCHAR(10)
+                , [Loan_ID] NVARCHAR(50)
+                , [Loan_Status] NVARCHAR(20)
+                , [ApplicationDateTime] NVARCHAR(20)
+                , [RecordDateTime] BIGINT
+                , [LastRecordUpdateDateTime] BIGINT
+            );
+            '''
 
-    # Create table
-    sql_query_create_tables = '''
+
+sql_query_create_LoanApplications = '''
             DROP TABLE IF EXISTS LoanApplications ;
             CREATE TABLE LoanApplications  (
                 [Gender] NVARCHAR(20)
@@ -30,6 +50,7 @@ def create_table():
                 , [Credit_History] NVARCHAR(10)
                 , [Property_Area] NVARCHAR(10)
                 , [Loan_ID] NVARCHAR(50)
+                , [Loan_Status] NVARCHAR(20) NULL
                 , [ApplicationDateTime] NVARCHAR(20)
                 , [RecordDateTime] BIGINT
                 , [LastRecordUpdateDateTime] BIGINT
@@ -40,23 +61,27 @@ def create_table():
             '''
 
 
+
+def create_table(sql_query_create_tables):
+
+    # Create table
     conn = odbc.connect(conn_string)
     cursor = conn.cursor()
     cursor.execute(sql_query_create_tables)
     cursor.commit()
-    print(f'Table created at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Table created at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 
-def load_data(_features):
+def load_data(table_to_load_to, _features):
     # _features string
-    sql_query_insert_data = f'INSERT INTO LoanApplications VALUES (\'{_features}\')'
+    sql_query_insert_data = f'INSERT INTO {table_to_load_to} VALUES (\'{_features}\')'
 
     conn = odbc.connect(conn_string)
     cursor = conn.cursor()
     cursor.execute(sql_query_insert_data)
     cursor.commit()
-    print(f'Data loaded at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Data loaded at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 
@@ -72,15 +97,15 @@ def get_data(loan_id):
     dataset = cursor.fetchall()
 
     df = pd.DataFrame.from_records(dataset, columns=[col[0] for col in cursor.description])
-    print(f'Data fetched at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Data fetched at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
     return df
 
 
-def get_all_data():
+def get_all_data(table):
     # Get all data from table
     sql_query_get_data = f'''
-        SELECT * FROM LoanApplications 
-        ORDER BY RecordDateTime DESC
+        SELECT * FROM {table} 
+        ORDER BY CASE WHEN Loan_Status = '0' THEN 0 ELSE 1 END ASC, LastRecordUpdateDateTime DESC
             '''
     conn = odbc.connect(conn_string)
     cursor = conn.cursor()
@@ -88,7 +113,7 @@ def get_all_data():
     dataset = cursor.fetchall()
 
     # df = pd.DataFrame.from_records(dataset, columns=[col[0] for col in cursor.description])
-    print(f'Data fetched at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Data fetched at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
     return dataset
 
 
@@ -103,7 +128,7 @@ def delete_data(where_clause):
     cursor = conn.cursor()
     cursor.execute(sql_query_delete_data)
     cursor.commit()
-    print(f'Data deleted at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Data deleted at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 
@@ -117,7 +142,7 @@ def delete_loan_request(loan_id):
     cursor = conn.cursor()
     cursor.execute(sql_query_delete_data)
     cursor.commit()
-    print(f'Record deleted at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Record deleted at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 
@@ -138,9 +163,10 @@ def update_loan_request(_features):
                 , [Loan_Amount_Term] = '{_features[9]}'
                 , [Credit_History] = '{_features[10]}'
                 , [Property_Area] = '{_features[11]}'
-                , [LastRecordUpdateDateTime] = '{_features[12]}'
-                , [model_pred] = '{_features[13]}'
-                , [model_pred_proba] = '{_features[14]}'
+                , [Loan_Status] = '{_features[12]}'
+                , [LastRecordUpdateDateTime] = '{_features[13]}'
+                , [model_pred] = '{_features[14]}'
+                , [model_pred_proba] = '{_features[15]}'
                 
         WHERE [Loan_ID] = '{_features[0]}'
             '''
@@ -149,18 +175,30 @@ def update_loan_request(_features):
     cursor = conn.cursor()
     cursor.execute(sql_query_update_data)
     cursor.commit()
-    print(f'Record {_features[0]} updated at: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}')
+    print(f'Record {_features[0]} updated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
+
+
+
+def batch_load_data(table_to_load_to, _features):
+    # _features string
+    sql_query_insert_data = f'INSERT INTO {table_to_load_to} VALUES (\'{_features}\')'
+
+    conn = odbc.connect(conn_string)
+    cursor = conn.cursor()
+    cursor.execute(sql_query_insert_data)
+    cursor.commit()
+    print(f'Data loaded at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 
 
 if __name__== "__main__":
 
-    # pass
+    pass
 
     # Create table
-    create_table()
+    # create_table(sql_query_create_LoanApplications)
 
     # Test loading
     # Loan_ID = 'LP-3221050401389918522429'
@@ -180,7 +218,7 @@ if __name__== "__main__":
     # _features = [Loan_ID,Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area,ApplicationDateTime]
     # _features = "\', \'".join(_features)
 
-    # load_data(_features)
+    # load_data('LoanApplications',_features)
 
 
     # Test deleting data

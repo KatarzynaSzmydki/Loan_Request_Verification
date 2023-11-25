@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, jsonify
 
 import os
 from datetime import datetime
+from datetime import timedelta
 
 import json
 import pprint
@@ -42,10 +43,11 @@ def verifyloanrequest():
         'Property_Area' : request.form["Property_Area"]
     }
 
-    _key_value_pairs['Loan_ID'] = "LP" + str(hash(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))) + str(random.randint(1,900))
-    _key_value_pairs['ApplicationDateTime'] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-    _key_value_pairs['RecordDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    _key_value_pairs['Loan_ID'] = "LP" + str(hash(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))) + str(random.randint(1,900))
+    _key_value_pairs['Loan_Status'] = '0'
+    _key_value_pairs['ApplicationDateTime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    _key_value_pairs['RecordDateTime'] = datetime.now().strftime("%Y%m%d%H%M%S")
+    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.now().strftime("%Y%m%d%H%M%S")
 
 
     # Get score from model
@@ -57,7 +59,7 @@ def verifyloanrequest():
     _key_value_pairs['model_pred'] = pred_proba[0]
     _key_value_pairs['model_pred_proba'] = pred_proba[1]
 
-    pprint.pprint(_key_value_pairs)
+    # pprint.pprint(_key_value_pairs)
 
     # _json_file = json.dumps(_key_value_pairs)
 
@@ -75,8 +77,8 @@ def verifyloanrequest():
     # Load data to SQL table in SQL server
     _feature_values_to_load = "\', \'".join(_feature_values)
     # print(_feature_values_to_load)
-    load_data(_feature_values_to_load)
-    # print(f'{datetime.utcnow()}: Success sending data to Azure.')
+    load_data('LoanApplications', _feature_values_to_load)
+    # print(f'{datetime.now()}: Success sending data to Azure.')
 
     return redirect("/loanrequests")
 
@@ -91,12 +93,11 @@ def report_page():
 @app.route('/loanrequests', methods = ['GET'])
 def loanrequests():
 
-    loan_data = get_all_data()
-    # loans_tbl['ApplicationDateTime'] = loans_tbl['ApplicationDateTime'].strftime
+    loan_data = get_all_data('LoanApplications')
 
-    # loan_data = list(loan_data.to_records(index=False))
+    date_for_edits = int( (datetime.now().strftime("%Y%m%d%H%M%S"))[0:8] + "000000" )
 
-    return render_template("loanrequests.html", loans_tbl = loan_data)
+    return render_template("loanrequests.html", loans_tbl = loan_data, current_date = date_for_edits)
 
 
 
@@ -132,10 +133,11 @@ def save_edits():
         'LoanAmount' : request.form["LoanAmount"],
         'Loan_Amount_Term' : request.form["Loan_Amount_Term"],
         'Credit_History' : request.form["Credit_History"],
-        'Property_Area' : request.form["Property_Area"]
+        'Property_Area' : request.form["Property_Area"],
+        'Loan_Status': request.form["Loan_Status"]
     }
 
-    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    _key_value_pairs['LastRecordUpdateDateTime'] = datetime.now().strftime("%Y%m%d%H%M%S")
 
     # Get score from model
     _features = pd.DataFrame.from_dict([_key_value_pairs])
@@ -151,8 +153,8 @@ def save_edits():
     _feature_values = [x for x in _key_value_pairs.values()]
     update_loan_request(_features=_feature_values)
 
-
     return redirect("/loanrequests")
+
 
 
 

@@ -2,6 +2,8 @@
 
 """ module: actions """
 import json
+import sys
+
 import requests
 import msal
 import pandas as pd
@@ -18,10 +20,12 @@ from azure.storage.filedatalake import (
     FileSystemClient
 )
 from azure.identity import DefaultAzureCredential
-from credentials import client_id, client_secret, tenant_id, workspace_id, dataset_id, account_name, account_key, file_system, client_directory
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+
+from credentials import client_id, client_secret, tenant_name, tenant_id, workspace_id, dataset_id, account_name, account_key, file_system, client_directory
 import dicts
 
-base_url = f"https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes"
+base_url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets/{dataset_id}/refreshes"
 
 
 # ========================================================================
@@ -35,14 +39,6 @@ def get_service_client_account_key(account_name, account_key) -> DataLakeService
 
 
 
-def __upload_file_to_directory(self, directory_client: DataLakeDirectoryClient, local_path: str, file_name: str):
-    file_client = directory_client.get_file_client(file_name)
-
-    with open(file=os.path.join(local_path, file_name), mode="rb") as data:
-        file_client.upload_data(data, overwrite=True)
-
-
-
 def upload_file_to_directory(load_from_local_file, file_to_upload_path, loan_id, file_to_upload_json=None):
     try:
         service_client = get_service_client_account_key(
@@ -52,7 +48,7 @@ def upload_file_to_directory(load_from_local_file, file_to_upload_path, loan_id,
 
         file_system_client = service_client.get_file_system_client(file_system = file_system)
         directory_client = file_system_client.get_directory_client(client_directory)
-        file_client = directory_client.create_file(f'{client_directory}{datetime.utcnow().strftime("%Y%m%d%H%M%S")}_{loan_id}.json')
+        file_client = directory_client.create_file(f'{client_directory}{datetime.now().strftime("%Y%m%d%H%M%S")}_{loan_id}.json')
 
         if (load_from_local_file is True) & (file_to_upload_path is not None):
             local_file = open(
@@ -63,7 +59,7 @@ def upload_file_to_directory(load_from_local_file, file_to_upload_path, loan_id,
             file_contents = json.dumps(file_to_upload_json, indent=4)
         file_client.append_data(data=file_contents, offset=0, length=len(file_contents))
         file_client.flush_data(len(file_contents))
-        print(f'File uploaded successfully at: {datetime.utcnow()} for the loan: {loan_id}')
+        print(f'File uploaded successfully at: {datetime.now()} for the loan: {loan_id}')
 
     except Exception as e:
         print(e)
@@ -168,6 +164,7 @@ def get_score_for_request(model_filename, feature_values):
     # Pre-trained model loaded as pickle file
     # Features loaded as pandas DF
 
+    get_blob_from_directory()
     model = pickle.load(open(model_filename, 'rb'))
 
     feature_values['Gender'].replace(dicts.gender, inplace=True)
@@ -210,11 +207,40 @@ def get_score_for_request(model_filename, feature_values):
 
 
 
+
+def get_blob_from_directory():
+    try:
+
+        connect_str = 'DefaultEndpointsProtocol=https;AccountName=rs1dl1;AccountKey=pRyCGC4UOzRK8hkLrxdJlPhkn5Q8RkrN3xerBoOb6x00gqp3GXb+iFYQ07CJ1hmcwfb32E6kYMXK+AStcmWw5Q==;EndpointSuffix=core.windows.net'
+
+        blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+
+        blob_client = blob_service_client.get_blob_client(container='loanapplicationverification/loanapplicationmodel', blob='finalized_model.sav')
+
+        download_file_path = os.path.join(f'{os.path.dirname(os.getcwd())}\\finalized_model.sav')
+
+        container_client = blob_service_client.get_container_client(container= 'loanapplicationverification/loanapplicationmodel')
+
+        if os.path.exists(download_file_path):
+            os.remove(download_file_path)
+
+        with open(file=download_file_path, mode="wb") as download_file:
+            blob_client.download_blob(download_file)
+
+
+
+    except Exception as e:
+        print(e)
+
+
+
+
 # ========================================================================
 
 
 if __name__== "__main__":
     pass
+
 
     # test loading data to ADLS Gen2
     # for i in range(5):
@@ -240,26 +266,27 @@ if __name__== "__main__":
 
 
     # Test Method 2
-    # authority_url = f"https://login.microsoftonline.com/{tenant_id}"
+    # authority_url = f"https://login.microsoftonline.com/{tenant_name}"
     # scope = ["https://analysis.windows.net/powerbi/api/.default"]
     #
     #
-    # app_ = msal.ConfidentialClientApplication(client_id, authority=authority_url, client_credential=client_secret)
+    # app_ = msal.ConfidentialClientApplication(
+    #     client_id,
+    #     authority=authority_url,
+    #     client_credential=client_secret
+    # )
     # result = app_.acquire_token_for_client(scopes=scope)
-    # print(result['access_token'])
+    # # print(result['access_token'])
     #
+    # access_token = result['access_token']
+    # header = {
+    #     'Content-Type': 'application/json',
+    #     'Authorization': f'Bearer {access_token}'
+    # }
     #
-    # if 'access_token' in result:
-    #    access_token =  result['access_token']
-    #    header = {'Authorization':f'Bearer {access_token}','Content-Type':'application/json'}
-    #    api_call = requests.post(url=base_url, headers=header)
+    # api_call = requests.post(url=base_url, headers=header)
     #
-    #    print(base_url)
-    #    print(header)
-    #    print(api_call)
+    # print(api_call.)
+    # result = api_call.json()['value']
+    #
 
-       # result = api_call.json()['value']
-
-       #
-       # df = pd.DataFrame(result, columns=['requestId','id','refreshType','startTime','endTime','status'])
-       # df.set_index('id')

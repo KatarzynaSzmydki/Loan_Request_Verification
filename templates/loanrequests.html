@@ -25,7 +25,8 @@
                         <div class="col-md-1"><b>Loan Term</b></div>
                         <div class="col-md-1"><b>Credit History</b></div>
                         <div class="col-md-1"><b>Property Area</b></div>
-                        <div class="col-md-1"><b>Model Pred</b></div>
+                        <div class="col-md-1"><b>Scoring</b></div>
+                        <div class="col-md-1"><b>Loan approved?</b></div>
 
                     </div>
                 </div>
@@ -62,11 +63,37 @@
                         </div>
 
                         <div class="col-md-1">
-                            <a href="edit_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Edit</a>
+                            {% if loan.Loan_Status == "Yes" %}
+                            <span class="badge bg-success">{{loan.Loan_Status}}</span>
+                            {% elif loan.Loan_Status == "No"  %}
+                            <span class="badge bg-danger">{{loan.Loan_Status}}</span>
+                            {% else  %}
+                            <span class="badge bg-warning">Review</span>
+                            {% endif %}
                         </div>
+
                         <div class="col-md-1">
-                            <a href="delete_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Delete</a>
+                            {% if loan.Loan_Status == "0" %}
+                                <a href="edit_record/{{loan.Loan_ID}}" class="btn btn-sm btn-primary">Edit</a>
+                            {% elif loan.LastRecordUpdateDateTime >= current_date %}
+                                <a href="edit_record/{{loan.Loan_ID}}" class="btn btn-sm btn-primary">Edit</a>
+                            {% else  %}
+                                <a href="#" class="btn btn-sm btn-secondary">Processed</a>
+                            {% endif %}
                         </div>
+
+
+                        <div class="col-md-1">
+
+                            {% if loan.Loan_Status == "0" %}
+                                <a href="delete_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Delete</a>
+                            {% elif loan.LastRecordUpdateDateTime >= current_date %}
+                                <a href="delete_record/{{loan.Loan_ID}}" class="btn btn-sm btn-dark">Delete</a>
+                            {% else  %}
+                            {% endif %}
+                        </div>
+
+
                     </div>
                 </div>
 
