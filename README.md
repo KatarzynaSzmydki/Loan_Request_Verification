@@ -40,9 +40,8 @@ The primary purpose of this solution is to showcase a fully functioning platform
 
 **See short preview of the solution**
 
-![image]([https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/d40e2216-4c40-40ee-8cfc-524e1115c6ec](https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/ee6c95a7-2bdf-4bdb-94b3-a4bb1bf66232)https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/ee6c95a7-2bdf-4bdb-94b3-a4bb1bf66232)
 
-
+https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/cc2682e3-1b97-4c23-9e6d-cece0f85c0b5
 
 
 
