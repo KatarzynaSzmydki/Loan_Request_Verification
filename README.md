@@ -27,7 +27,7 @@ _Responsive Design_: The web application features a responsive design, ensuring 
 
 **Purpose:**
 
-The primary purpose of this solution is to provide a robust and user-friendly platform for verifying loan requests through the integration of machine learning models. By combining Flask, Bootstrap, and machine learning capabilities, the repository aims to offer a sophisticated yet accessible tool for efficient loan request decision-making.
+The primary purpose of this solution is to showcase a fully functioning platform for verifying loan requests through the integration of machine learning models within web application. By combining Flask, Bootstrap, and machine learning capabilities, the repository aims to offer a sophisticated yet accessible tool for efficient loan request decision-making.
 
 **Technology Used:**
 
@@ -35,11 +35,16 @@ The primary purpose of this solution is to provide a robust and user-friendly pl
 - Azure SQL Database
 - Azure Data Factory to copy data to Azure SQL database in scheduled intervals and re-train classification model (Databricks)
 - Power BI report
+- Flask framework
 
 
 **See short preview of the solution**
 
-![image](https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/d40e2216-4c40-40ee-8cfc-524e1115c6ec)
+![image]([https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/d40e2216-4c40-40ee-8cfc-524e1115c6ec](https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/ee6c95a7-2bdf-4bdb-94b3-a4bb1bf66232)https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/ee6c95a7-2bdf-4bdb-94b3-a4bb1bf66232)
+
+
+
+
 
 
 
