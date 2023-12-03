@@ -4,7 +4,7 @@
 
 **Solution Overview:**
 
-This Git repository hosts a comprehensive solution designed to streamline the loan request verification process. Working solution is available under [link](https://loanapplicationverification.azurewebsites.net/).
+This Git repository hosts a comprehensive solution designed to streamline the loan request verification process. Working solution is available under this [link](https://loanapplicationverification.azurewebsites.net/).
 
 **Solution Architecture:**
 
