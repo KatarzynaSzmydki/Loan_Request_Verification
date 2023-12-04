@@ -4,7 +4,6 @@
 
 import pyodbc as odbc
 import pandas as pd
-import struct
 from datetime import datetime
 
 from credentials import conn_string

@@ -2,11 +2,8 @@
 
 """ module: actions """
 import json
-import sys
 
 import requests
-import msal
-import pandas as pd
 import pickle
 
 # ========================================================================
@@ -15,14 +12,11 @@ import pickle
 import os
 from datetime import datetime
 from azure.storage.filedatalake import (
-    DataLakeServiceClient,
-    DataLakeDirectoryClient,
-    FileSystemClient
+    DataLakeServiceClient
 )
-from azure.identity import DefaultAzureCredential
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient
 
-from credentials import client_id, client_secret, tenant_name, tenant_id, workspace_id, dataset_id, account_name, account_key, file_system, client_directory
+from credentials import workspace_id, dataset_id, account_name, account_key, file_system, client_directory
 import dicts
 
 base_url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets/{dataset_id}/refreshes"

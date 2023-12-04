@@ -9,17 +9,11 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix
-
-from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.metrics import confusion_matrix
 
 import dicts
-from credentials import conn_string
-from datetime import datetime
-import pyodbc as odbc
 
-from custom_packages.loading import load_data, get_all_data, delete_loan_request, get_data, update_loan_request, create_table, sql_query_create_LoanApplications_Processed
+from custom_packages.loading import get_all_data
 
 file_path = "C:\\Users\\kszmydki001\\IdeaProjects\\Data Processing Tool\\Loan+Approval+Prediction.csv"
 
