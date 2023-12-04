@@ -14,7 +14,7 @@ This Git repository hosts a comprehensive solution designed to streamline the lo
 
 **Key Characteristics:**
 
-_Machine Learning Integration_: The solution seamlessly integrates classification model to assess and verify loan requests, providing a sophisticated layer of decision-making based on predictive analytics.
+_Machine Learning Integration_: The solution seamlessly integrates classification model to assess and verify loan requests, providing a layer of decision-making based on predictive analytics.
 
 _Flask Web Application_: The code incorporates a Flask web application, offering an intuitive and user-friendly interface for interacting with the loan request verification system. Bootstrap is utilized to enhance the application's aesthetic appeal and responsiveness.
 
