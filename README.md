@@ -9,6 +9,9 @@ This Git repository hosts a comprehensive solution designed to streamline the lo
 **Caution:** Since this solution is a demo it heavily relies on free-tier resources. If the quota is exceeded, there may be a temporary service interruption until the limits are reset.
 
 
+
+
+
 **Solution Architecture:**
 
 
