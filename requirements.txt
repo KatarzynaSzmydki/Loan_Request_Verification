@@ -1,5 +1,6 @@
 fpdf2
 flask~=3.0.0
+flask-bootstrap
 sqlalchemy~=2.0.23
 flask-sqlalchemy
 flask_restful
