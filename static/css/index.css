@@ -21,8 +21,9 @@
         color: #fff !important; /* Change to the desired text color */
     }
 
+
 body {
-    background-image: url('/static/images/bckg4_2.jpg');
+    background-image: url('/static/images/bckg4_1.jpg');
     background-size: cover;
     background-position: right;
 }

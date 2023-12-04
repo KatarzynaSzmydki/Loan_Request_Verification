@@ -2,6 +2,7 @@ import random
 
 import pandas as pd
 from flask import Flask, render_template, request, redirect, jsonify
+from flask_bootstrap import Bootstrap4
 
 import os
 from datetime import datetime
@@ -19,6 +20,8 @@ model_filename = 'finalized_model.sav'
 
 
 app = Flask(__name__)
+bootstrap = Bootstrap4(app)
+
 
 
 @app.route('/')

@@ -2,6 +2,12 @@
 
 {% extends 'base.html' %}
 
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+
 {% block body %}
 
 <br>
@@ -12,14 +18,13 @@
             <h3>Provide loan details </h3>
             <br>
 
-            <form action="/verifyloanrequest" method="POST" class="form-horizontal">
+            <form action="/verifyloanrequest" method="POST" class="form-horizontal" >
 
 
                 <div class="row">
-                    <div >
-
+                    <div>
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Gender</b></labe>
                                 <select class="form-control" name="Gender" id="Gender">
                                     <option value="Male">Male</option>
@@ -29,9 +34,8 @@
                         </div>
 
 
-
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Married</b></labe>
                                 <select class="form-control" name="Married" id="Married">
                                     <option value="No">No</option>
@@ -41,7 +45,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Dependents</b></labe>
                                 <select class="form-control" name="Dependents" id="Dependents">
                                     <option value="0">0</option>
@@ -54,7 +58,7 @@
 
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Education</b></labe>
                                 <select class="form-control" name="Education" id="Education">
                                     <option value="Not Graduate">Not Graduate</option>
@@ -64,7 +68,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Self-Employed</b></labe>
                                 <select class="form-control" name="Self_Employed" id="Self_Employed">
                                     <option value="No">No</option>
@@ -74,14 +78,14 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Applicant Income</b></labe>
                                 <input class="form-control" type="number" name="ApplicantIncome" id="ApplicantIncome">
                             </div>
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Coapplicant Income</b></labe>
                                 <input class="form-control" type="number" name="CoapplicantIncome" id="CoapplicantIncome">
                             </div>
@@ -89,14 +93,14 @@
 
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Loan Amount</b></labe>
                                 <input class="form-control" type="number" name="LoanAmount" id="LoanAmount">
                             </div>
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Loan Amount Term</b></labe>
                                 <input class="form-control" type="number" name="Loan_Amount_Term" id="Loan_Amount_Term">
                             </div>
@@ -104,7 +108,7 @@
 
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for=""><b>Credit History</b></labe>
                                 <select class="form-control" name="Credit_History" id="Credit_History">
                                     <option value="No">No</option>
@@ -115,7 +119,7 @@
 
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-1">
                                 <labe for="" c><b>Property Area</b></labe>
                                 <select class="form-control" name="Property_Area" id="Property_Area">
                                     <option value="Rural">Rural</option>

@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loanrequests.css') }}">
+{% endblock %}
+
+
 {% block body %}
+
 
 
 <br>

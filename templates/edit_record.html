@@ -2,6 +2,12 @@
 
 {% extends 'base.html' %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+
 {% block body %}
 
 
@@ -16,7 +22,7 @@
       <form action="/save_edits" method="POST" class="form-horizontal">
         <input type="hidden" value="{{ loan_data.Loan_ID }}" name="Loan_ID" >
         <div class="form-group">
-          <labe for="">Gender</labe>
+          <labe for=""><b>Gender</b></labe>
           <select class="form-control" name="Gender" id="Gender">
             <option style="background:gray" value="{{ loan_data.Gender }}" selected > {{ loan_data.Gender }} </option>
             <option value="Male">Male</option>
@@ -26,7 +32,7 @@
         <br>
 
         <div class="form-group">
-          <labe for="">Married</labe>
+          <labe for=""><b>Married</b></labe>
           <select class="form-control" name="Married" id="Married">
             <option style="background:gray" value="{{ loan_data.Married }}" selected > {{ loan_data.Married }} </option>
             <option value="No">No</option>
@@ -37,7 +43,7 @@
 
 
         <div class="form-group">
-          <labe for="">Dependents</labe>
+          <labe for=""><b>Dependents</b></labe>
           <select class="form-control" name="Dependents" id="Dependents">
             <option style="background:gray" value="{{ loan_data.Dependents }}" selected > {{ loan_data.Dependents }} </option>
             <option value="0">0</option>
@@ -50,7 +56,7 @@
 
 
         <div class="form-group">
-          <labe for="">Education</labe>
+          <labe for=""><b>Education</b></labe>
           <select class="form-control" name="Education" id="Education">
             <option style="background:gray" value="{{ loan_data.Education }}" selected > {{ loan_data.Education }} </option>
             <option value="Not Graduate">Not Graduate</option>
@@ -61,7 +67,7 @@
 
 
         <div class="form-group">
-          <labe for="">Self-Employed</labe>
+          <labe for=""><b>Self-Employed</b></labe>
           <select class="form-control" name="Self_Employed" id="Self_Employed">
             <option style="background:gray" value="{{ loan_data.Self_Employed }}" selected > {{ loan_data.Self_Employed }} </option>
             <option value="No">No</option>
@@ -71,34 +77,34 @@
         <br>
 
         <div class="form-group">
-          <labe for="">Applicant Income</labe>
+          <labe for=""><b>Applicant Income</b></labe>
           <input class="form-control" type="number" name="ApplicantIncome" id="ApplicantIncome" value="{{loan_data.ApplicantIncome}}">
         </div>
         <br>
 
 
         <div class="form-group">
-          <labe for="">Coapplicant Income</labe>
+          <labe for=""><b>Coapplicant Income</b></labe>
           <input class="form-control" type="number" name="CoapplicantIncome" id="CoapplicantIncome" value="{{loan_data.CoapplicantIncome}}">
         </div>
         <br>
 
 
         <div class="form-group">
-          <labe for="">Loan Amount</labe>
+          <labe for=""><b>Loan Amount</b></labe>
           <input class="form-control" type="number" name="LoanAmount" id="LoanAmount" value="{{loan_data.LoanAmount}}">
         </div>
         <br>
 
 
         <div class="form-group">
-          <labe for="">Loan Amount Term</labe>
+          <labe for=""><b>Loan Amount Term</b></labe>
           <input class="form-control" type="number" name="Loan_Amount_Term" id="Loan_Amount_Term" value="{{loan_data.Loan_Amount_Term}}">
         </div>
         <br>
 
         <div class="form-group">
-          <labe for="">Credit History</labe>
+          <labe for=""><b>Credit History</b></labe>
           <select class="form-control" name="Credit_History" id="Credit_History">
             <option style="background:gray" value="{{ loan_data.Credit_History }}" selected > {{ loan_data.Credit_History }} </option>
             <option value="No">No</option>
@@ -109,7 +115,7 @@
 
 
         <div class="form-group">
-          <labe for="">Property Area</labe>
+          <labe for=""><b>Property Area</b></labe>
           <select class="form-control" name="Property_Area" id="Property_Area">
             <option style="background:gray" value="{{ loan_data.Property_Area }}" selected > {{ loan_data.Property_Area }} </option>
             <option value="Rural">Rural</option>
