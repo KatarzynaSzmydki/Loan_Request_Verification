@@ -47,7 +47,10 @@ The primary purpose of this solution is to showcase a fully functioning platform
 **See short preview of the solution**
 
 
-https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/cc2682e3-1b97-4c23-9e6d-cece0f85c0b5
+https://github.com/KatarzynaSzmydki/Loan_Request_Verification/assets/104822281/003f4bf3-3b73-41d9-8eeb-cb2bf160a72a
+
+
+
 
 
 
